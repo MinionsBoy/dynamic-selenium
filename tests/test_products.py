@@ -4,15 +4,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-def test_search_product(driver):
+def test_search_product(driver, product_name):
     open_homepage(driver)
-    search_product(driver, "Tshirt")
+    search_product(driver, product_name)
     assert "SEARCHED PRODUCTS" in driver.page_source
 
-def test_is_product_present(driver):
+def test_is_product_present(driver, product_name):
     open_homepage(driver)
-    search_product(driver, "Tshirt")
-    assert is_product_present(driver, "Tshirt")
+    search_product(driver, product_name)
+    assert is_product_present(driver, product_name)
 
 def test_verify_all_products_and_detail(driver):
     open_homepage(driver)
@@ -21,9 +21,9 @@ def test_verify_all_products_and_detail(driver):
     view_product_detail(driver)
     assert "Category" in driver.page_source or "product-information" in driver.page_source
 
-def test_add_review_on_product(driver):
+def test_add_review_on_product(driver, test_user, review_text):
     open_homepage(driver)
-    add_review(driver, "Test User", "review@example.com", "Great product!")
+    add_review(driver, test_user["name"], test_user["email"], review_text)
     assert "Thank you for your review." in driver.page_source or "success" in driver.page_source.lower()
 
 def test_view_category_products(driver):

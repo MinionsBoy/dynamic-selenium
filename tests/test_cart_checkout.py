@@ -23,17 +23,17 @@ def test_remove_products_from_cart(driver):
     remove_product_from_cart(driver)
     assert "Cart is empty!" in driver.page_source or "Shopping Cart" in driver.page_source
 
-def test_place_order_login_before_checkout(driver):
+def test_place_order_login_before_checkout(driver, test_user):
     open_homepage(driver)
-    login(driver, "validuser@example.com", "TestPassword123!")
+    login(driver, test_user["email"], test_user["password"])
     add_product_to_cart(driver)
-    place_order(driver, "Test User", "4111111111111111", "123", "1225")
+    place_order(driver, test_user["name"], "4111111111111111", "123", "1225")
     assert "ORDER PLACED!" in driver.page_source or "Congratulations! Your order has been confirmed!" in driver.page_source
 
-def test_download_invoice_after_purchase(driver):
+def test_download_invoice_after_purchase(driver, test_user):
     open_homepage(driver)
-    login(driver, "validuser@example.com", "TestPassword123!")
+    login(driver, test_user["email"], test_user["password"])
     add_product_to_cart(driver)
-    place_order(driver, "Test User", "4111111111111111", "123", "1225")
+    place_order(driver, test_user["name"], "4111111111111111", "123", "1225")
     download_invoice(driver)
     # No assert: download is browser-handled
